@@ -2,9 +2,11 @@
 
 ## DATASET
 1. get_data.ipynb - the main notebook for creating the datasets.
-2. classified dataset.zip -Organized subsets for easier experimentation
-3. EDA.ipynb - provides a basic EDA for the data.
+2. classified dataset.zip -Organized subsets for easier experimentation.
+3. combined_full_clean_ordered.parquet - contains daily snapshots of NIFTY500 from 2012 to 2025, cleaned and ranked by market cap.
+4. nifty50 unvierse classified excel - list of all NIFTY500 companies (existing in that period), along with sector info.
 
+### Data in classified_dataset.zip
 #### By Size
 ```
 size/large/
@@ -15,10 +17,6 @@ size/small/
 ```
 sector/<sector_name>/
 ```
-1. dailysnapshot parquet - daily movement of the nifty500 from 2012 to 2025 dec, some constituents werent present earlier, so thats why each day might not have exactly 500 items. labels - date, ohlcv, might not be very clean instead use panel_clean_new.parquet. this one is not ordered, but is cleaner to work with.
-2. dataset500_Clean - master dataset obtained by nifty 500 notebook
-3. nifty50 unvierse classified excel - list of all companies, along with sector info, ignore market cap, dont know which date thats for
-Each folder contains relevant ticker CSVs.
 
 ## Quant Model
 Implementing a production-grade quantitative trading system designed to generate market-neutral alpha using a combination of:
@@ -151,6 +149,8 @@ The strategy focuses on high risk-adjusted returns (Sharpe > 2.5), low drawdowns
   - Backtest settings  
 
 ---
+### 🔹 `dashboard.py`
+- Interactive interface designed with streamlit to locally host the model and visualize the results of backtesting 
 
 ---
 
