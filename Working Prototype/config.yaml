@@ -1,0 +1,74 @@
+# =========================
+# DATA CONFIG
+# =========================
+data:
+  raw_zip: "classified_dataset.zip"
+  processed_dir: "data/processed"
+
+# =========================
+# UNIVERSE CONFIG
+# =========================
+universe:
+  size_filter: ["large", "mid"]
+  min_history_days: 252
+
+# =========================
+# SIGNAL PARAMETERS
+# =========================
+signals:
+
+  momentum:
+    lookback_long: 252     # 12 months
+    lookback_skip: 21      # skip last month
+
+  reversal:
+    lookback: 21
+    volume_threshold: 1.5
+
+# =========================
+# REGIME MODEL
+# =========================
+regime:
+  n_states: 2
+
+  # trending (low-vol)
+  momentum_weight_trending: 0.7
+  reversal_weight_trending: 0.1
+  ml_weight_trending: 0.2
+
+  # stress (high-vol)
+  momentum_weight_stress: 0.2
+  reversal_weight_stress: 0.6
+  ml_weight_stress: 0.2
+
+# =========================
+# PORTFOLIO CONSTRUCTION
+# =========================
+portfolio:
+
+  method: "signal"   # options: mean_variance, risk_parity, signal
+
+  top_n_long: 15
+
+  max_position_size: 0.05
+  max_sector_weight: 0.25
+
+  max_gross_leverage: 2.5
+  max_net_leverage: 0.30
+
+  max_turnover_per_rebalance: 0.5
+
+  target_volatility: 0.15
+  cov_window: 252
+
+# =========================
+# BACKTEST SETTINGS
+# =========================
+backtest:
+
+  rebalance_freq: 5              # every 5 trading days
+  transaction_cost: 0.002       # 10 bps per turnover
+  ic_lookback_days: 126
+
+  start_date: "2018-01-01"
+  end_date: "2023-12-31"
