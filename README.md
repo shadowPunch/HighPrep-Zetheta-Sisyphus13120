@@ -1,7 +1,7 @@
 # NIFTY 500 Quantitative trading system
 
 ## DATASET
-1. nifty500_dataset.ipynb - the main notebook for creating the datasets, no use to anyone unless you want to know how dataset was made, even then incomplete
+1. get_data.ipynb - the main notebook for creating the datasets.
 2. classified dataset.zip -Organized subsets for easier experimentation
 3. EDA.ipynb - provides a basic EDA for the data.
 
