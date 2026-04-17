@@ -286,7 +286,7 @@ def build_positions_df(weights_df: pd.DataFrame, sector_map: dict) -> pd.DataFra
     df.columns = ["ticker", "weight"]
     df["sector"]     = df["ticker"].map(sector_map).fillna("Unknown")
     df["direction"]  = df["weight"].apply(lambda x: "🟢 Long" if x > 0 else "🔴 Short")
-    df["market_cap"] = "Large/Mid"
+    df["market_cap"] = "Derived from universe filter"
     df = df.sort_values("weight", ascending=False).reset_index(drop=True)
     return df
 
@@ -675,9 +675,8 @@ def chart_ic_decay_real(signal_name: str, close: pd.DataFrame, signal_df: pd.Dat
         mean_ics = decay_df["mean_ic"].tolist()
         icirs    = decay_df["icir"].tolist()
     except Exception:
-        # Fallback: zeros
-        mean_ics = [0.0] * len(horizons)
-        icirs    = [0.0] * len(horizons)
+        mean_ics = [np.nan] * len(horizons)
+        icirs = [np.nan] * len(horizons)
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(go.Bar(
@@ -811,7 +810,7 @@ def chart_turnover_exposure(pnl_df: pd.DataFrame) -> go.Figure:
     if "turnover" not in pnl_df.columns:
         return go.Figure()
     turnover = pnl_df["turnover"].rolling(21).mean() * 100
-    n_pos    = pnl_df.get("n_positions", pd.Series(25, index=pnl_df.index))
+    n_pos = pnl_df["n_positions"] if "n_positions" in pnl_df.columns else pd.Series(index=pnl_df.index, dtype=float)
 
     fig = make_subplots(rows=2, cols=1, shared_xaxes=True,
                         row_heights=[0.5, 0.5], vertical_spacing=0.06)
@@ -1313,8 +1312,8 @@ with tab5:
         cvar99 = compute_cvar(pnl_series, 0.99)
 
         r1, r2, r3, r4, r5 = st.columns(5)
-        r1.metric("VaR 99% (daily)",  f"{var99*100:.3f}%",  f"${abs(var99)*1e6:,.0f} / $1M")
-        r2.metric("VaR 95% (daily)",  f"{var95*100:.3f}%",  f"${abs(var95)*1e6:,.0f} / $1M")
+        r1.metric("VaR 99% (daily)", f"{var99*100:.3f}%")
+        r2.metric("VaR 95% (daily)", f"{var95*100:.3f}%")
         r3.metric("CVaR 99%",         f"{cvar99*100:.3f}%", "Expected shortfall")
         r4.metric("Ann. Vol",         f"{m['ann_vol']*100:.2f}%")
         r5.metric("Max Drawdown",     f"{m['max_dd']*100:.2f}%")
@@ -1381,7 +1380,7 @@ with tab5:
         }
         st.dataframe(pd.DataFrame(risk_summary), use_container_width=True, hide_index=True)
 
-    except:
+    except Exception as e:
         st.error(f"Tab 5 crashed: {e}")
         st.exception(e)  # this prints the full traceback
 
