@@ -160,3 +160,6 @@ The strategy focuses on high risk-adjusted returns (Sharpe > 2.5), low drawdowns
 streamlit app dashboard.py
 ```
 
+## Reference
+Information about NIFTY 500 companies - [https://github.com/Ratnesh-bhosale/NIFTY500_dataset](https://github.com/Ratnesh-bhosale/NIFTY500_dataset)
+
