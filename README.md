@@ -2,9 +2,8 @@
 
 ## DATASET
 1. nifty500_dataset.ipynb - the main notebook for creating the datasets, no use to anyone unless you want to know how dataset was made, even then incomplete
-2. classified dataset.zip -Organized subsets for easier experimentation, 
+2. classified dataset.zip -Organized subsets for easier experimentation
 3. EDA.ipynb - provides a basic EDA for the data.
-4. train_model.py - main script which trains and tests the model and stores its results in /artifacts/.
 
 #### By Size
 ```
@@ -16,19 +15,10 @@ size/small/
 ```
 sector/<sector_name>/
 ```
-3. dailysnapshot parquet - daily movement of the nifty500 from 2012 to 2024 dec, some constituents werent present earlier, so thats why each day might not have exactly 500 items. labels - date, ohlcv, might not be very clean instead use panel_clean_new.parquet. this one is not ordered, but is cleaner to work with.
-4. dataset500_Clean - master dataset obtained by nifty 500 notebook
-5. nifty50 unvierse classified excel - list of all companies, along with sector info, ignore market cap, dont know which date thats for
-6. feature store .py - script to run feature extraction (open - f64	high - f64	low - f64	close - f64	volume - f64	sector - str	size - str	ret_1d - f64	ret_5d - f64	ret_21d - f64	vol_21d - f64	mom_21 - f64	mom_63 - f64	vol_ratio_21 - f64	ret_1d_norm - f64	ret_5d_norm - f64	ret_21d_norm - f64	vol_21d_norm - f64	mom_21_norm - f64	mom_63_norm - f64	vol_ratio_21_norm - f64)
-7. features_clean - the dataset with above mentioned features
-8. nextphase - ignore, just processing
-9. recent data - classified_data filtered for 2019-2024 data
-10. starterarb notebook - statistical arbitration implementation - doesnt work well
+1. dailysnapshot parquet - daily movement of the nifty500 from 2012 to 2025 dec, some constituents werent present earlier, so thats why each day might not have exactly 500 items. labels - date, ohlcv, might not be very clean instead use panel_clean_new.parquet. this one is not ordered, but is cleaner to work with.
+2. dataset500_Clean - master dataset obtained by nifty 500 notebook
+3. nifty50 unvierse classified excel - list of all companies, along with sector info, ignore market cap, dont know which date thats for
 Each folder contains relevant ticker CSVs.
-
-## to add
-1. alternate data sources - i am currently looking into pytrends and reddit data, will add if it works out
-2. data for arbitration
 
 ## Quant Model
 Implementing a production-grade quantitative trading system designed to generate market-neutral alpha using a combination of:
@@ -152,14 +142,6 @@ The strategy focuses on high risk-adjusted returns (Sharpe > 2.5), low drawdowns
 
 ---
 
-### 🔹 `run_pipeline.py`
-- End-to-end execution script  
-- Connects all modules:
-  - Data → Signals → Regime → Portfolio → Backtest  
-- Produces final performance output
-
----
-
 ### 🔹 `config.yaml`
 - Central configuration file  
 - Controls:
@@ -175,6 +157,6 @@ The strategy focuses on high risk-adjusted returns (Sharpe > 2.5), low drawdowns
 ##  How to Run
 
 ```bash
-python run_pipeline.py
+streamlit app dashboard.py
 ```
 
